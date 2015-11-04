@@ -1,0 +1,18 @@
+{
+    "version": "0.0.1",
+    "name": "com.appMobiCloud",
+    "cordova_name": "AppMobiCloud",
+    "description": "AppMobi Cloud Services",
+    "license": "Apache 2.0",
+    "repo": "",
+    "issue": "",
+    "keywords": [
+        "appMobiCloud"
+    ],
+    "platforms": [
+        "ios",
+        "android"
+    ],
+    "engines": [],
+    "englishdoc": ""
+}

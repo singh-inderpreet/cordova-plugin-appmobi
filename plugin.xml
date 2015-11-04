@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    id="com.appMobiCloud"
+    version="0.0.1">
+    <name>AppMobiCloud</name>
+    <description>AppMobi Plugin for Intel XDK users</description>
+    <license>Apache 2.0</license>
+    <keywords>AppMobiCloud</keywords>
+
+    <engines>
+            <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <js-module src="www/appMobiCloud.js" name="AppMobiCloud">
+        <clobbers target="" />
+    </js-module>
+    
+    <asset src="www/angular.min.js" target="angular.min.js" />
+    <asset src="www/app.js" target="app.js" />
+    <asset src="www/ng-cordova-oauth.js" target="ng-cordova-oauth.js" />
+    
+    <preference name="APP_NAME" />
+    <preference name="APP_SECRET" />
+    <preference name="CONFIG_URL" />
+
+    <dependency id="cordova-plugin-inappbrowser" />
+
+    <!-- ios -->
+    <platform name="ios">
+
+        <config-file target="config.xml" parent="/*">
+            <feature name="AppMobiCloud">
+                <param name="ios-package" onload="true" value="AppMobiCloud" />
+            </feature>
+            <preference name="CordovaWebViewEngine" value="AppMobiWebView" />
+            <preference name="privateStack" value="true" />
+        </config-file>
+        
+        <config-file target="*-Info.plist" parent="AppMobiAppname">
+            <string>$APP_NAME</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="AppMobiAppSecret">
+            <string>$APP_SECRET</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="AppMobiConfigURL">
+            <string>$CONFIG_URL</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSAppTransportSecurity">
+            <key>NSAppTransportSecurity</key>
+            <dict>
+                <key>NSAllowsArbitraryLoads</key>
+                <true/>
+            </dict>
+        </config-file>
+
+        <header-file src="src/ios/AppMobiCloud.h" />
+        <source-file src="src/ios/libAppMobi.a" framework="true" />
+        <framework src="libz.dylib"/>
+
+    </platform>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="AppMobiCloud" >
+                <param name="android-package" value="com.appMobiCloud.AppMobiCloud" />
+                <param name="onload" value="true" />
+            </feature>
+            <preference name="privateStack" value="true" />
+            
+            <preference name="webview" value="com.appMobiCloud.AppMobiWebViewEngine" />
+            
+        </config-file>
+        
+        
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+            <uses-permission android:name="android.permission.WAKE_LOCK" />
+            <uses-permission android:name="android.permission.VIBRATE"/>
+            <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+            <permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+            <uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" />
+        </config-file>
+        
+        <config-file target="res/values/strings.xml" parent="/resources">
+            
+            <string name="appName">$APP_NAME</string>
+            <string name="appSecret">$APP_SECRET</string>
+            <string name="configURL">$CONFIG_URL</string>
+            
+        </config-file>
+        
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity android:name="com.appMobiCloud.PushHandlerActivity" android:exported="true"/>
+            
+            <receiver android:name="com.appMobiCloud.CordovaGCMBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND" >
+                <intent-filter>
+                    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                    <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                    <category android:name="$PACKAGE_NAME" />
+                </intent-filter>
+            </receiver>
+            <service android:name="com.appMobiCloud.AppMobiCloudPushListener" />
+        </config-file>
+        
+        <source-file src="src/android/libs/libAppMobi.jar" target-dir="libs/" />
+        
+        <source-file src="src/android/AppMobiCloud.java" target-dir="src/com/appMobiCloud" />
+        
+        
+        <source-file src="src/android/PushHandlerActivity.java" target-dir="src/com/appMobiCloud" />
+        
+        
+    </platform>
+    
+    <!-- wp8 -->
+    <platform name="wp8">
+        <config-file target="config.xml" parent="/*">
+            <feature name="PushPlugin">
+                <param name="wp-package"
+                value="PushPlugin" />
+                <param name="onload" value="true"></param>
+            </feature>
+        </config-file>
+        
+        <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
+            <Capability Name="ID_CAP_PUSH_NOTIFICATION"/>
+            <Capability Name="ID_CAP_IDENTITY_DEVICE" />
+        </config-file>
+        
+        <source-file src="src/wp/PushPlugin.cs" />
+        <source-file src="src/wp/AMCNotification.cs" />
+        <source-file src="src/wp/AMCResponse.cs" />
+        <source-file src="src/wp/AMCResponseHandler.cs" />
+        <source-file src="src/wp/AppMobiCloudDownloader.cs" />
+        <source-file src="src/wp/CloudAppConfigData.cs" />
+        <source-file src="src/wp/CloudAppConfigParser.cs" />
+        <source-file src="src/wp/CloudPushController.cs" />
+    </platform>
+
+</plugin>
