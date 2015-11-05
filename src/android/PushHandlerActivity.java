@@ -22,7 +22,7 @@ public class PushHandlerActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.v(TAG, "onCreate");
-		isPushPluginActive =false;
+		isPushPluginActive =AppMobiCloud.isActive();
 		processPushBundle(isPushPluginActive);
 		finish();
 		if (!isPushPluginActive) {
@@ -54,7 +54,4 @@ public class PushHandlerActivity extends Activity {
 		startActivity(launchIntent);
 
 	}
-
-
-
 }

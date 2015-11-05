@@ -9,7 +9,7 @@ module.controller('MyCtrl', function ($scope, $cordovaOauth) {
         for (var key in dataObjAuth) {
             if (dataObjAuth[key].provider == "facebook") {
                 try{
-                  var clientId = dataObjAuth[key].clientID;
+                  var clientId = dataObjAuth[key].clientId;
                   var appScope = dataObjAuth[key].appScope;
                   var res = [];
                   var arrayScope = [];
@@ -53,7 +53,7 @@ module.controller('MyCtrl', function ($scope, $cordovaOauth) {
         var dataObjAuth = AppMobiCloud.oauth.getOAuthDataList();
         for (var key in dataObjAuth) {
             if (dataObjAuth[key].provider == "google") {
-                clientId = dataObjAuth[key].clientID;
+                clientId = dataObjAuth[key].clientId;
                 var appScope = dataObjAuth[key].appScope;
                 var res = [];
                 var arrayScope = [];
@@ -91,7 +91,7 @@ module.controller('MyCtrl', function ($scope, $cordovaOauth) {
         var dataObjAuth = AppMobiCloud.oauth.getOAuthDataList();
         for (var key in dataObjAuth) {
             if (dataObjAuth[key].provider == "linkedin") {
-                clientId = dataObjAuth[key].clientID;
+                clientId = dataObjAuth[key].clientId;
                 clientSecert = dataObjAuth[key].clientSecert;
                 var appScope = dataObjAuth[key].appScope;
                 var res = [];
