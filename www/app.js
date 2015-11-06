@@ -23,6 +23,7 @@ module.controller('MyCtrl', function ($scope, $cordovaOauth) {
                      launchImageID.style.display = 'block';
                      document.getElementById('light1').style.display = 'none';
                      document.getElementById('fade').style.display = 'none';
+  					 document.getElementById('background').style.display = 'block';
                      var resultParse = JSON.parse(JSON.stringify(result));
                      var access_token = "";
                      for (var key in resultParse) {
@@ -66,6 +67,7 @@ module.controller('MyCtrl', function ($scope, $cordovaOauth) {
                     launchImageID.style.display = 'block';
                     document.getElementById('light1').style.display = 'none';
                     document.getElementById('fade').style.display = 'none';
+  					document.getElementById('background').style.display = 'block';
                     var resultParse = JSON.parse(JSON.stringify(result));
                     var access_token = "";
                     for (var key in resultParse) {
@@ -105,6 +107,7 @@ module.controller('MyCtrl', function ($scope, $cordovaOauth) {
                     launchImageID.style.display = 'block';
                     document.getElementById('light1').style.display = 'none';
                     document.getElementById('fade').style.display = 'none';
+  					document.getElementById('background').style.display = 'block';
                     var resultParse = JSON.parse(JSON.stringify(result));
                     var access_token = "";
                     for (var key in resultParse) {
