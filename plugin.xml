@@ -42,7 +42,7 @@
     <preference name="APP_SECRET" />
     <preference name="CONFIG_URL" />
 
-    <dependency id="cordova-plugin-inappbrowser" />
+    <dependency id="cordova-plugin-inappbrowser" url="https://github.com/apache/cordova-plugin-inappbrowser.git" />
 
     <!-- ios -->
     <platform name="ios">
