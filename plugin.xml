@@ -19,19 +19,20 @@
 -->
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-    id="com.appMobiCloud"
-    version="0.0.1">
-    <name>AppMobiCloud</name>
+    id="cordova-plugin-appmobi"
+    version="1.0.0">
+    <name>Appmobi</name>
     <description>AppMobi Plugin for Intel XDK users</description>
     <license>Apache 2.0</license>
-    <keywords>AppMobiCloud</keywords>
+    <keywords>Appmobi</keywords>
 
     <engines>
             <engine name="cordova" version=">=3.0.0" />
+            <engine name="cordova-ios" version=">=4.0.0-dev" />
     </engines>
 
     <js-module src="www/appMobiCloud.js" name="AppMobiCloud">
-        <clobbers target="" />
+        <clobbers target="cordova.AppMobiCloud" />
     </js-module>
     
     <asset src="www/angular.min.js" target="angular.min.js" />
