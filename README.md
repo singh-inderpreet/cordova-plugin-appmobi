@@ -1,12 +1,12 @@
-**AppMobi Secure Plugin**
+**Appmobi Secure Mobile Platform**
 ---------------------
-Appmobi Secure Mobile Platform provides a level of security never seen in a mobile platform, enabling the development of highly secure Cordova-based applications in minutes versus months. This platform provides your development team with configurable, high-performance security options for every app built, including app and device level shared keys for encryption and identity verification as well as integration with most 3rd party authentication systems such as OAUTH, LDAP, and more.
+The Appmobi Secure Mobile Platform provides a level of security never seen in a mobile platform, enabling the development of highly secure Cordova-based applications in minutes versus months. This platform provides your development team with configurable, high-performance security options for every app built, including app and device level shared keys for encryption and identity verification as well as integration with most 3rd party authentication systems such as OAUTH, LDAP, and more.
 
 Quickly and easily build the most secure apps on the market today, in minutes.
 
 **Requirements**
 --------
-In order to utilize the Appmobi platform you must have a registered Appmobi PrivateStack platform.  If you do not have an account or Appmobi PrivateStack server you can [Register for a Demo](https://licensing.appmobi.com/demo/signup/) on our website.
+In order to utilize the Appmobi platform you must have a registered Appmobi PrivateStack platform.  If you do not have an account or Appmobi PrivateStack server you can [Register for a FREE Demo](https://licensing.appmobi.com/demo/signup/) on our website.
 
 **Features**
 --------
