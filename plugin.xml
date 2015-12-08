@@ -40,7 +40,7 @@
     <asset src="www/ng-cordova-oauth.js" target="ng-cordova-oauth.js" />
     
     <preference name="APP_NAME" />
-    <preference name="APP_SECRET" />
+    <preference name="PROJECT_ID" />
     <preference name="CONFIG_URL" />
 
     <dependency id="cordova-plugin-inappbrowser" url="https://github.com/inderpreet-singh/cordova-plugin-inappbrowser.git" />
@@ -60,7 +60,7 @@
             <string>$APP_NAME</string>
         </config-file>
         <config-file target="*-Info.plist" parent="AppMobiAppSecret">
-            <string>$APP_SECRET</string>
+            <string>$PROJECT_ID</string>
         </config-file>
         <config-file target="*-Info.plist" parent="AppMobiConfigURL">
             <string>$CONFIG_URL</string>
@@ -108,7 +108,7 @@
         <config-file target="res/values/strings.xml" parent="/resources">
             
             <string name="appName">$APP_NAME</string>
-            <string name="appSecret">$APP_SECRET</string>
+            <string name="appSecret">$PROJECT_ID</string>
             <string name="configURL">$CONFIG_URL</string>
             
         </config-file>
