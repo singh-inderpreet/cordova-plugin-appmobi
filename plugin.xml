@@ -43,7 +43,7 @@
     <preference name="PROJECT_ID" />
     <preference name="CONFIG_URL" />
 
-    <dependency id="cordova-plugin-inappbrowser" url="https://github.com/inderpreet-singh/cordova-plugin-inappbrowser.git" />
+    <dependency id="cordova-plugin-inappbrowser" url="https://github.com/appMobiGithub/cordova-plugin-inappbrowser.git" />
 
     <!-- ios -->
     <platform name="ios">
