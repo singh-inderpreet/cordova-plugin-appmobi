@@ -485,5 +485,4 @@ function findPushUserByUsername(){
 ----------
 Check out our [Appmobi Sample Cordova Application Template](https://github.com/appMobiGithub/sample-appmobi-privatestack) for a quickstart on getting to know the funtionality of the Appmobi platform.  We provide working examples of using many of the different features Appmobi provides which you can either use as a learning tool or a fresh application base.
 
-**Note :** In our plugin, we have used forked repository of InAppBrowser Plugin as a dependency, so that we can avoid instability issues in case any new commit happen in the HEAD branch. Once the fix of [CB-10040](https://issues.apache.org/jira/browse/CB-10040) is available in npm we will be using the npm as our main branch. 
 
