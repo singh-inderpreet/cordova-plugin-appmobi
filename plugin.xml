@@ -135,30 +135,5 @@
         
         
     </platform>
-    
-    <!-- wp8 -->
-    <platform name="wp8">
-        <config-file target="config.xml" parent="/*">
-            <feature name="PushPlugin">
-                <param name="wp-package"
-                value="PushPlugin" />
-                <param name="onload" value="true"></param>
-            </feature>
-        </config-file>
-        
-        <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
-            <Capability Name="ID_CAP_PUSH_NOTIFICATION"/>
-            <Capability Name="ID_CAP_IDENTITY_DEVICE" />
-        </config-file>
-        
-        <source-file src="src/wp/PushPlugin.cs" />
-        <source-file src="src/wp/AMCNotification.cs" />
-        <source-file src="src/wp/AMCResponse.cs" />
-        <source-file src="src/wp/AMCResponseHandler.cs" />
-        <source-file src="src/wp/AppMobiCloudDownloader.cs" />
-        <source-file src="src/wp/CloudAppConfigData.cs" />
-        <source-file src="src/wp/CloudAppConfigParser.cs" />
-        <source-file src="src/wp/CloudPushController.cs" />
-    </platform>
 
 </plugin>
