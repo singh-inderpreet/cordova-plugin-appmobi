@@ -10,7 +10,6 @@ import org.json.JSONException;
 import android.util.Log;
 
 public class AppMobiCloud extends CordovaPlugin {
-
 	public static AppMobiCloud plugin;
 	private static CordovaInterface cordova;
 	private static CordovaWebView webView;
@@ -37,8 +36,6 @@ public class AppMobiCloud extends CordovaPlugin {
 		AppMobiCloudController.pluginInitialize(cordova.getActivity(), webView);
 	}
 
-	
-	
 	public boolean execute(String action, final JSONArray args,
 			final CallbackContext callbackContext) throws JSONException {
 
@@ -258,11 +255,15 @@ public class AppMobiCloud extends CordovaPlugin {
 			final String key = args.getString(0);
 			final String value = args.getString(1);
 			final String isMasterData = args.getString(2);
-			final String isSyncRequired = args.getString(3);	
+			final String isSyncRequired = args.getString(3);
+			final String isJSON = args.getString(4);
+
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
-					AppMobiCloudController.sharedController.cloudSecure.saveSecureData(key,value,isMasterData,isSyncRequired);
+					AppMobiCloudController.sharedController.cloudSecure
+							.saveSecureData(key, value, isMasterData,
+									isSyncRequired,isJSON);
 				}
 			});
 
@@ -298,15 +299,16 @@ public class AppMobiCloud extends CordovaPlugin {
 	public void onResume(boolean multitasking) {
 		// TODO Auto-generated method stub
 		super.onResume(multitasking);
-		if(shouldExecuteOnResume){
-		cordova.getThreadPool().execute(new Runnable() {
-		public void run() {
-		if (AppMobiCloudController.sharedController != null)
-				AppMobiCloudController.sharedController.enterForeground();		
-			}});		
-		}
-		else{
-			shouldExecuteOnResume=true;
+		if (shouldExecuteOnResume) {
+			cordova.getThreadPool().execute(new Runnable() {
+				public void run() {
+					if (AppMobiCloudController.sharedController != null&&AppMobiCloudController.sharedController.appName!=null)
+						AppMobiCloudController.sharedController
+								.enterForeground();
+				}
+			});
+		} else {
+			shouldExecuteOnResume = true;
 		}
 	}
 

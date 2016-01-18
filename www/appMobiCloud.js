@@ -291,9 +291,9 @@ if (typeof AppMobiCloud.notification == "undefined")
         AppMobiCloud.secureData = new AppMobiCloud.SecureData();
     
     
-    AppMobiCloud.SecureData.prototype.saveData = function(key, data,isMasterData,saveToServer) {
-        if(validateUserPass(key)&&validateUserPass(data))
-        exec(null, null, "AppMobiCloud","saveSecureData",[key, data,isMasterData, saveToServer]);
+    AppMobiCloud.SecureData.prototype.saveData = function(key, data,isMasterData,saveToServer, isJSON) {
+        if(validateUserPass(key)&&data)
+        exec(null, null, "AppMobiCloud","saveSecureData",[key, data,isMasterData, saveToServer, isJSON]);
         else
         alert("A-Z, a-z ,0-9 ,_ are permitted for key and value");    
     };
