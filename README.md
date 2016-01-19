@@ -112,35 +112,68 @@ SecureDataStore allows you to save your Application Data securely on device and 
  saveData method is used to store data securely on the device and/or server. To use this functionality, user needs to enable app data security in your application security settings on the enterprise management portal.
 
 ```
-AppMobiCloud.secureData.saveData(key, value,isMasterData, saveToServer);
+AppMobiCloud.secureData.saveData(key, value,isMasterData, saveToServer, isJSON);
 ```
 
 **Parameters**	
 
  - **key** : The unique identifier for a particular key which user wants to store securely onto the device and/or to server.
  - **value** : Text data which is assigned to a particular key.
- - **isMasterData**  : Pass 1 to store on device as Master Data.(After synced with server, data will be available on device) OR Pass 0 if you don’t want to store on device (Developer can store data on device temporarily. Once this data is synced with server, data will be deleted from device.)
+ - **isMasterData**  : Pass 1 to store on device as Master Data.OR Pass 0 to store on device as Transactional Data.
  - **saveToServer** : If user wants to store data locally only then set the parameter value to 0 (false). Or if the user wants to store data to the server then set parameter value to 1 (true).
+ - **isJSON** : If user wants to store complex JSON objects, then set the parameter value to 1 (true). Or if the user wants to store data as String then set parameter value to 0 (false).
 
 
 **EXAMPLE**
 
 ```
-var secureDataValue = document.getElementId(“username”);
-//or
-var secureDataValue = “{'LogDateTime':'Jul/25/2015 17:48','BP_Systolic1':'112','BP_Diastolic1':'62','MedicineTaken':true}”;
-saveSecureData(“myKey”,secureDataValue);
-function saveSecureData(key,value){
-AppMobiCloud.secureData.saveData(key, value,0,0);
-}
-document.addEventListener("appMobi.securedata.save", onSecureDataSave, false);
-AppMobiCloud.secureData.saveData(key, value, saveToServer);
-// e.g. var key = “myKey”;
-// e.g. var value = “myValue”;
-// e.g. var saveToServer = 0;
-function onSecureDataSave(data){
-alert(data.message);
-}
+function saveSecureData() {
+            var key = prompt("Please enter Key", "BP");
+            var dta = {};
+            dta.id = 1;
+            dta.val = "170";
+            dta.key = "BP";
+            var value = prompt("Please enter value", JSON.stringify(dta));
+            var isMasterData = prompt("Master Data Required: \n\n 0 for No, \n 1 for Yes", "0");
+            var saveToServer = prompt("Please enter saveToServer \n\n 0 for No, \n 1 for Yes", "0");
+            var isJSON = prompt("Please enter if data is in JSON format \n\n 0 for No, \n 1 for Yes", "0");			
+			try{			
+				if(typeof(JSON.parse(value))!='object'&&isJSON==1)		
+				{
+					alert("Please provide valid JSON data");
+					return;
+				}
+			}
+			catch(err){
+				if(isJSON==1)
+				{
+					try{
+						isArr = Object.prototype.toString.call(value) == '[object Array]';
+						if (isArr == false)
+						{
+							alert("Please provide valid JSON data");
+							return;
+						}
+					}
+					catch(err)
+					{
+						alert("Please provide valid JSON data");
+						return;
+					}
+				}
+			}
+			AppMobiCloud.secureData.saveData(key, value, isMasterData, saveToServer, isJSON);
+		}
+
+      document.addEventListener("appMobi.securedata.save", onSecureDataSave, false);
+
+      function onSecureDataSave(data) {
+            if(data.success)
+              alert("key : "+data.key+"\n value : "+data.value+"\n message : "+data.message);
+            else
+               alert("Message : "+data.message);
+        
+        }
 ```
      
 ###syncData
@@ -179,35 +212,41 @@ AppMobiCloud.secureData.readData(key,isMasterData);
 **EXAMPLE**
 
 ```
-var myKey = “username”;
-var isMasterData = 0;
-readSecureData(myKey,isMasterData);
-function readSecureData(key,isMasterData){
-    AppMobiCloud.secureData.readData(key,isMasterData);
-}
-function onSecureDataRead(data){
-if(data.success){
-        var mySecureList = AppMobiCloud.secureData.getSecureDataList();
-        // returns the data list for the key
-        var len=mySecureList.length;
-        if(len > 0) {
-            for(i=0; i < len; i++) {
-                var obj=AppMobiCloud.secureData.getSecureData(mySecureList[i]);
-                try{
-                    if(typeof obj == "object" && obj.id == mySecureList[i]){
-// Access the object data using key-value.
-                        AppMobiCloud.notification.alert(obj.key +" : "+ obj.value,"SecureData","OK");
+var myKey = “BP”;
+        var isMasterData = 0;
+        readSecureData(myKey,isMasterData);
+
+        function readSecureData(key,isMasterData){
+            AppMobiCloud.secureData.readData(key,isMasterData); 
+        }
+
+        function onSecureDataRead(data) {
+            if (data.success) {
+                try {
+                    var json = JSON.stringify(data.value);
+                    var mySecureList = JSON.parse(json);
+                    if (typeof mySecureList == "object"&&(mySecureList.length)) {
+                        for (var local_data in mySecureList){
+						if(typeof mySecureList[local_data] === 'object')
+						       AppMobiCloud.notification.alert( data.key + " : " + JSON.stringify(mySecureList[local_data]), "SecureData", "OK");
+                            else
+							AppMobiCloud.notification.alert(data.key + " : " + mySecureList[local_data], "SecureData", "OK");
+
+                        }
                     }
-                }catch(e){
+                    else
+                        AppMobiCloud.notification.alert("No data available with specified key", "SecureData", "OK");
+                } catch (e) {
                     AppMobiCloud.notification.alert("Caught Exception For: " + e.message);
                 }
+  
             }
+            else
+                alert(data.message);
         }
-        else
-        AppMobiCloud.notification.alert("No data available with specified key","SecureData","OK");
-    }
-}
-document.addEventListener("appMobi.securedata.read", onSecureDataRead, false);
+        
+        document.addEventListener("appMobi.securedata.read", onSecureDataRead, false);
+
 ```
 
 ##Secure Analytics
@@ -253,7 +292,7 @@ Our plugin makes use of Cordova plugin variables to communicate with the Appmobi
 
  Use this method to get a list of id keys to obtain access to the list of available notifications for this user.
 ```
-var notificationArray = AppMobiCloud.notification.getNotificationList();
+var notificationArray = AppMobiCloud.notification.getNotificationsList();
 ```
  
 **EXAMPLE**
