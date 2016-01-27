@@ -60,8 +60,10 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
+					if(AppMobiCloudController.sharedController.cloudPush!=null){
 					AppMobiCloudController.sharedController.cloudPush
 							.checkPushUser(userID, pass);
+					}
 
 				}
 			});
@@ -73,6 +75,7 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
+					if(AppMobiCloudController.sharedController.cloudPush!=null)
 					AppMobiCloudController.sharedController.cloudPush
 							.addPushUser(userID, pass, email);
 				}
@@ -85,6 +88,7 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
+					if(AppMobiCloudController.sharedController.cloudPush!=null)
 					AppMobiCloudController.sharedController.cloudPush
 							.readPushNotifications(notificationID, true);
 				}
@@ -98,6 +102,7 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
+					if(AppMobiCloudController.sharedController.cloudPush!=null)
 					AppMobiCloudController.sharedController.cloudPush
 							.editPushUser(email, password, "");
 				}
@@ -109,6 +114,7 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
+					if(AppMobiCloudController.sharedController.cloudPush!=null)
 					AppMobiCloudController.sharedController.cloudPush
 							.deletePushUser();
 				}
@@ -119,6 +125,7 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
+					if(AppMobiCloudController.sharedController.cloudPush!=null)
 					AppMobiCloudController.sharedController.cloudPush
 							.refreshPushNotifications();
 				}
@@ -130,6 +137,7 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
+					if(AppMobiCloudController.sharedController.cloudPush!=null)
 					AppMobiCloudController.sharedController.cloudPush
 							.sendPushUserPass();
 				}
@@ -146,6 +154,7 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
+					if(AppMobiCloudController.sharedController.cloudPush!=null)
 					AppMobiCloudController.sharedController.cloudPush
 							.sendPushNotification(userID, message, data);
 				}
@@ -159,6 +168,7 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
+					if(AppMobiCloudController.sharedController.cloudPush!=null)
 					AppMobiCloudController.sharedController.cloudPush
 							.findPushUser(userID, emailID);
 				}
@@ -173,6 +183,7 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
+					if(AppMobiCloudController.sharedController.cloudPush!=null)
 					AppMobiCloudController.sharedController.cloudPush
 							.setPushUserAttributes(attributes);
 				}
@@ -188,6 +199,7 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
+					if(AppMobiCloudController.sharedController.cloudPush!=null)
 					AppMobiCloudController.sharedController.cloudPush.alert(
 							msg, title, btn);
 				}
@@ -209,6 +221,7 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
+					if(AppMobiCloudController.sharedController.cloudAdvertising!=null)
 					AppMobiCloudController.sharedController.cloudAdvertising
 							.runPromotion(appname, storeurl, promotion,
 									protocol, packageStr, query);
@@ -223,7 +236,7 @@ public class AppMobiCloud extends CordovaPlugin {
 		if (action.equalsIgnoreCase("installUpdate")) {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
-				public void run() {
+				public void run() {					
 					AppMobiCloudController.sharedController
 							.installManualUpdate();
 				}
@@ -261,6 +274,7 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
+					if(AppMobiCloudController.sharedController.cloudSecure!=null)
 					AppMobiCloudController.sharedController.cloudSecure
 							.saveSecureData(key, value, isMasterData,
 									isSyncRequired,isJSON);
@@ -269,9 +283,11 @@ public class AppMobiCloud extends CordovaPlugin {
 
 		}
 	
-		if (action.equalsIgnoreCase("syncSecureData")) {				cordova.getThreadPool().execute(new Runnable() {
+		if (action.equalsIgnoreCase("syncSecureData")) {	
+			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
+					if(AppMobiCloudController.sharedController.cloudSecure!=null)
 					AppMobiCloudController.sharedController.cloudSecure.sync();
 				}
 			});
@@ -284,6 +300,7 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
+					if(AppMobiCloudController.sharedController.cloudSecure!=null)
 					AppMobiCloudController.sharedController.cloudSecure.readSecureData(key,isMasterData);
 				}
 			});
