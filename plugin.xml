@@ -76,7 +76,7 @@
         <header-file src="src/ios/AppMobiCloud.h" />
         <source-file src="src/ios/libAppMobi.a" framework="true" />
         <framework src="libz.dylib"/>
-        <framework src="libstdc++.6.0.9.tbd"/>
+        <framework src="libstdc++.6.dylib" />
 
     </platform>
 
