@@ -28,5 +28,6 @@
 -(void) readSecureData:(CDVInvokedUrlCommand*)command;
 -(void) syncSecureData:(CDVInvokedUrlCommand*)command;
 -(void) registerOAuth:(CDVInvokedUrlCommand*)command;
-
+-(void) getPassCode:(CDVInvokedUrlCommand*)command;
+-(void) GetCouchDBUser:(CDVInvokedUrlCommand*)command;
 @end

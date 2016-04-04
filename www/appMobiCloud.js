@@ -7,6 +7,8 @@ try
 {
 AppMobiCloud.notifications = [];
 AppMobiCloud.pushStart = false;
+AppMobiCloud.passCode="";  
+AppMobiCloud.isPouchAvailable=false;      
 AppMobiCloud.uuid;
 /**
  * This class initilizes plugin on the device.
@@ -20,12 +22,11 @@ AppMobiCloud.Plugin = function() {
 AppMobiCloud.Advertising = function() {
 
 }
- 
-//Override Initialize plugin method in case of android
+
 AppMobiCloud.Plugin.prototype.initialize = function (successCB, errorCB,userName,passWord) {
     exec(successCB, errorCB, "AppMobiCloud", "initialize", [userName, passWord]);
 }
-               
+
 if (typeof AppMobiCloud.plugin == "undefined")
     AppMobiCloud.plugin = new AppMobiCloud.Plugin();
 
@@ -332,6 +333,28 @@ if (typeof AppMobiCloud.notification == "undefined")
         }
         return local;
     };
+               
+   //GetCouchDBUser plugin method
+   AppMobiCloud.SecureData.prototype.GetCouchDBUser = function (successCB, errorCB,db) {
+       exec(successCB, errorCB, "AppMobiCloud", "GetCouchDBUser", [db]);
+   }
+   
+   
+   
+   //setupPouch plugin method
+   AppMobiCloud.SecureData.prototype.setupPouch = function (db) {
+   
+       exec(function sucess(data){
+            AppMobiCloud.passCode=data.passcode;
+            AppMobiCloud.isPouchAvailable=true;
+            alert("Pouch initialized successfully");
+        }, 
+        function error(data){
+            alert("Error : "+data.message);
+            AppMobiCloud.isPouchAvailable=false; 
+        }, "AppMobiCloud", "getPassCode", [db]);
+   
+    }
 	
    /**
     * This class provides OAuth login on the device.

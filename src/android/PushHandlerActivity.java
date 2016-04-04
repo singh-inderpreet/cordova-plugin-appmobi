@@ -1,5 +1,7 @@
 package com.appMobiCloud;
 
+import com.appMobiCloud.AppMobiCloudPushListener;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -7,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 public class PushHandlerActivity extends Activity {
+	
 	private static String TAG = "PushHandlerActivity";
 	boolean isPushPluginActive;
 	public static boolean isPushStart;

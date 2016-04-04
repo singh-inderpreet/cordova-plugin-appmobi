@@ -1,12 +1,18 @@
 package com.appMobiCloud;
 
+import java.util.HashMap;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
+import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.util.Log;
 
 public class AppMobiCloud extends CordovaPlugin {
@@ -17,13 +23,17 @@ public class AppMobiCloud extends CordovaPlugin {
 	private static String notificationID;
 	public CallbackContext callback;
 	boolean shouldExecuteOnResume;
+	private static final int READ_PHONE_STATE_REQ_CODE = 1001;
+	private static final String READ_PHONE_STATE = Manifest.permission.READ_PHONE_STATE;
+	String userName;
+	String password;
 
 	@Override
 	public void initialize(CordovaInterface _cordova, CordovaWebView _webView) {
 		super.initialize(cordova, webView);
 		cordova = _cordova;
 		webView = _webView;
-
+		
 	}
 
 	// ************************************************* //
@@ -43,26 +53,75 @@ public class AppMobiCloud extends CordovaPlugin {
 		// pushMobi
 		// ************************************************* //
 		if (action.equalsIgnoreCase("initialize")) {
+			userName = args.getString(0);
+			password = args.getString(1);
+			callback = callbackContext;
+			int currentVer = android.os.Build.VERSION.SDK_INT;
+			if (currentVer >= 23) {
+				if (!PermissionHelper.hasPermission(this,READ_PHONE_STATE)) {
+					shouldExecuteOnResume=false;					
+					getPermission(READ_PHONE_STATE_REQ_CODE, READ_PHONE_STATE);
+				}
+				else {
+					performInitialise();
+				}
+			}
+			else{
+				cordova.getThreadPool().execute(new Runnable() {
+					@Override
+					public void run() {
+						if (AppMobiCloudController.sharedController != null) {
+							AppMobiCloudController.sharedController.initializeApp(callback,
+									userName, password);						}
 
-			final String userName= args.getString(0);
-			final String password= args.getString(1);
+					}
+				});
+				
+			}
+
+
+		}
+		
+
+		if (action.equalsIgnoreCase("getPassCode")) {
+			callback = callbackContext;
+			final String db = args.getString(0);		
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
-					AppMobiCloudController.sharedController.initializeApp(
-							callbackContext,userName,password);
+					if (AppMobiCloudController.sharedController != null) {
+						AppMobiCloudController.sharedController.getPasscode(callback,db);
+					}
+
 				}
 			});
-		}		
+		}
+		
+		if (action.equalsIgnoreCase("GetCouchDBUser")) {
+			callback = callbackContext;
+			final String db = args.getString(0);
+			cordova.getThreadPool().execute(new Runnable() {
+				@Override
+				public void run() {
+					if (AppMobiCloudController.sharedController != null) {
+						AppMobiCloudController.sharedController.GetCouchDBUser(callback,db);
+					}
+
+				}
+			});
+		}
+
+		
+		
 		if (action.equalsIgnoreCase("checkPushUser")) {
 			userID = args.getString(0);
 			pass = args.getString(1);
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
-					if(AppMobiCloudController.sharedController.cloudPush!=null){
-					AppMobiCloudController.sharedController.cloudPush
-							.checkPushUser(userID, pass);
+					if (AppMobiCloudController.sharedController.cloudPush != null) {
+						AppMobiCloudController.sharedController.cloudPush
+								.checkPushUser(userID, pass);
 					}
 
 				}
@@ -75,9 +134,9 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
-					if(AppMobiCloudController.sharedController.cloudPush!=null)
-					AppMobiCloudController.sharedController.cloudPush
-							.addPushUser(userID, pass, email);
+					if (AppMobiCloudController.sharedController.cloudPush != null)
+						AppMobiCloudController.sharedController.cloudPush
+								.addPushUser(userID, pass, email);
 				}
 			});
 
@@ -88,9 +147,9 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
-					if(AppMobiCloudController.sharedController.cloudPush!=null)
-					AppMobiCloudController.sharedController.cloudPush
-							.readPushNotifications(notificationID, true);
+					if (AppMobiCloudController.sharedController.cloudPush != null)
+						AppMobiCloudController.sharedController.cloudPush
+								.readPushNotifications(notificationID, true);
 				}
 			});
 
@@ -102,9 +161,9 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
-					if(AppMobiCloudController.sharedController.cloudPush!=null)
-					AppMobiCloudController.sharedController.cloudPush
-							.editPushUser(email, password, "");
+					if (AppMobiCloudController.sharedController.cloudPush != null)
+						AppMobiCloudController.sharedController.cloudPush
+								.editPushUser(email, password, "");
 				}
 			});
 
@@ -114,9 +173,9 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
-					if(AppMobiCloudController.sharedController.cloudPush!=null)
-					AppMobiCloudController.sharedController.cloudPush
-							.deletePushUser();
+					if (AppMobiCloudController.sharedController.cloudPush != null)
+						AppMobiCloudController.sharedController.cloudPush
+								.deletePushUser();
 				}
 			});
 
@@ -125,9 +184,9 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
-					if(AppMobiCloudController.sharedController.cloudPush!=null)
-					AppMobiCloudController.sharedController.cloudPush
-							.refreshPushNotifications();
+					if (AppMobiCloudController.sharedController.cloudPush != null)
+						AppMobiCloudController.sharedController.cloudPush
+								.refreshPushNotifications();
 				}
 			});
 
@@ -137,9 +196,9 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
-					if(AppMobiCloudController.sharedController.cloudPush!=null)
-					AppMobiCloudController.sharedController.cloudPush
-							.sendPushUserPass();
+					if (AppMobiCloudController.sharedController.cloudPush != null)
+						AppMobiCloudController.sharedController.cloudPush
+								.sendPushUserPass();
 				}
 			});
 
@@ -154,9 +213,9 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
-					if(AppMobiCloudController.sharedController.cloudPush!=null)
-					AppMobiCloudController.sharedController.cloudPush
-							.sendPushNotification(userID, message, data);
+					if (AppMobiCloudController.sharedController.cloudPush != null)
+						AppMobiCloudController.sharedController.cloudPush
+								.sendPushNotification(userID, message, data);
 				}
 			});
 
@@ -168,9 +227,9 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
-					if(AppMobiCloudController.sharedController.cloudPush!=null)
-					AppMobiCloudController.sharedController.cloudPush
-							.findPushUser(userID, emailID);
+					if (AppMobiCloudController.sharedController.cloudPush != null)
+						AppMobiCloudController.sharedController.cloudPush
+								.findPushUser(userID, emailID);
 				}
 			});
 
@@ -183,9 +242,9 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
-					if(AppMobiCloudController.sharedController.cloudPush!=null)
-					AppMobiCloudController.sharedController.cloudPush
-							.setPushUserAttributes(attributes);
+					if (AppMobiCloudController.sharedController.cloudPush != null)
+						AppMobiCloudController.sharedController.cloudPush
+								.setPushUserAttributes(attributes);
 				}
 			});
 
@@ -199,36 +258,14 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
-					if(AppMobiCloudController.sharedController.cloudPush!=null)
-					AppMobiCloudController.sharedController.cloudPush.alert(
-							msg, title, btn);
+					if (AppMobiCloudController.sharedController.cloudPush != null)
+						AppMobiCloudController.sharedController.cloudPush
+								.alert(msg, title, btn);
 				}
 			});
 
 		}
 
-		// ************************************************* //
-		// appAds
-		// ************************************************* //
-
-		if (action.equalsIgnoreCase("runPromotion")) {
-			final String appname = args.getString(0);
-			final String storeurl = args.getString(1);
-			final String promotion = args.getString(2);
-			final String protocol = args.getString(3);
-			final String packageStr = args.getString(4);
-			final String query = args.getString(5);
-			cordova.getThreadPool().execute(new Runnable() {
-				@Override
-				public void run() {
-					if(AppMobiCloudController.sharedController.cloudAdvertising!=null)
-					AppMobiCloudController.sharedController.cloudAdvertising
-							.runPromotion(appname, storeurl, promotion,
-									protocol, packageStr, query);
-				}
-			});
-
-		}
 		// ************************************************* //
 		// Live Update
 		// ************************************************* //
@@ -236,15 +273,14 @@ public class AppMobiCloud extends CordovaPlugin {
 		if (action.equalsIgnoreCase("installUpdate")) {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
-				public void run() {					
+				public void run() {
 					AppMobiCloudController.sharedController
 							.installManualUpdate();
 				}
 			});
 
 		}
-		
-		
+
 		// ************************************************* //
 		// oAuth Registration
 		// ************************************************* //
@@ -254,17 +290,17 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
-					AppMobiCloudController.sharedController.registerOAuth(token);
-					}
-				});			
-			}
-		
-		
+					AppMobiCloudController.sharedController
+							.registerOAuth(token);
+				}
+			});
+		}
+
 		// ************************************************* //
 		// Secure Storage Implementation
 		// ************************************************* //
 
-		if (action.equalsIgnoreCase("saveSecureData")) {		
+		if (action.equalsIgnoreCase("saveSecureData")) {
 			final String key = args.getString(0);
 			final String value = args.getString(1);
 			final String isMasterData = args.getString(2);
@@ -274,41 +310,41 @@ public class AppMobiCloud extends CordovaPlugin {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
-					if(AppMobiCloudController.sharedController.cloudSecure!=null)
-					AppMobiCloudController.sharedController.cloudSecure
-							.saveSecureData(key, value, isMasterData,
-									isSyncRequired,isJSON);
+					if (AppMobiCloudController.sharedController.cloudSecure != null)
+						AppMobiCloudController.sharedController.cloudSecure
+								.saveSecureData(key, value, isMasterData,
+										isSyncRequired, isJSON);
 				}
 			});
 
 		}
-	
-		if (action.equalsIgnoreCase("syncSecureData")) {	
+
+		if (action.equalsIgnoreCase("syncSecureData")) {
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
-					if(AppMobiCloudController.sharedController.cloudSecure!=null)
-					AppMobiCloudController.sharedController.cloudSecure.sync();
+					if (AppMobiCloudController.sharedController.cloudSecure != null)
+						AppMobiCloudController.sharedController.cloudSecure
+								.sync();
 				}
 			});
 
 		}
-		
-		if (action.equalsIgnoreCase("readSecureData")) {		
+
+		if (action.equalsIgnoreCase("readSecureData")) {
 			final String key = args.getString(0);
 			final String isMasterData = args.getString(1);
 			cordova.getThreadPool().execute(new Runnable() {
 				@Override
 				public void run() {
-					if(AppMobiCloudController.sharedController.cloudSecure!=null)
-					AppMobiCloudController.sharedController.cloudSecure.readSecureData(key,isMasterData);
+					if (AppMobiCloudController.sharedController.cloudSecure != null)
+						AppMobiCloudController.sharedController.cloudSecure
+								.readSecureData(key, isMasterData);
 				}
 			});
 
 		}
-		
 
-		
 		return true;
 	}
 
@@ -316,10 +352,12 @@ public class AppMobiCloud extends CordovaPlugin {
 	public void onResume(boolean multitasking) {
 		// TODO Auto-generated method stub
 		super.onResume(multitasking);
+		// Also check if not already initialising.
 		if (shouldExecuteOnResume) {
 			cordova.getThreadPool().execute(new Runnable() {
 				public void run() {
-					if (AppMobiCloudController.sharedController != null&&AppMobiCloudController.sharedController.appName!=null)
+					if (AppMobiCloudController.sharedController != null
+							&& AppMobiCloudController.sharedController.appName != null)
 						AppMobiCloudController.sharedController
 								.enterForeground();
 				}
@@ -340,7 +378,8 @@ public class AppMobiCloud extends CordovaPlugin {
 	public void onPause(boolean multitasking) {
 		// TODO Auto-generated method stub
 		super.onPause(multitasking);
-		if (AppMobiCloudController.sharedController != null&&AppMobiCloudController.sharedController.configData != null )
+		if (AppMobiCloudController.sharedController != null
+				&& AppMobiCloudController.sharedController.configData != null)
 			AppMobiCloudController.sharedController.enterBackground();
 
 	}
@@ -348,7 +387,44 @@ public class AppMobiCloud extends CordovaPlugin {
 	public static boolean isActive() {
 		return webView != null;
 	}
+
 	
-	
+	public void onRequestPermissionResult(int requestCode,
+			String[] permissions, int[] grantResults) throws JSONException {
+		for (int r : grantResults) {
+			if (r == PackageManager.PERMISSION_DENIED) {
+				HashMap<String, Object> properties= new HashMap<String, Object>();
+				properties.put("success", false);
+				properties.put("message", "Error occured in plugin initialization");
+				JSONObject obj = new JSONObject(properties);
+				PluginResult result = new PluginResult(PluginResult.Status.ERROR, obj); 
+				result.setKeepCallback(true);
+				callback.sendPluginResult(result);
+		
+				return;
+			}
+		}
+		switch (requestCode) {
+		case READ_PHONE_STATE_REQ_CODE:
+			cordova.getThreadPool().execute(new Runnable() {
+				@Override
+				public void run() {
+					performInitialise();
+				}
+			});
+			break;
+
+		}
+
+	}
+
+	void performInitialise() {
+		AppMobiCloudController.sharedController.initializeApp(callback,
+				userName, password);
+	}
+
+	protected void getPermission(int requestCode, String permission) {
+		PermissionHelper.requestPermission(this, requestCode, permission);
+	}
 
 }
