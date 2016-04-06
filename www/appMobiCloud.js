@@ -342,18 +342,8 @@ if (typeof AppMobiCloud.notification == "undefined")
    
    
    //setupPouch plugin method
-   AppMobiCloud.SecureData.prototype.setupPouch = function (db) {
-   
-       exec(function sucess(data){
-            AppMobiCloud.passCode=data.passcode;
-            AppMobiCloud.isPouchAvailable=true;
-            alert("Pouch initialized successfully");
-        }, 
-        function error(data){
-            alert("Error : "+data.message);
-            AppMobiCloud.isPouchAvailable=false; 
-        }, "AppMobiCloud", "getPassCode", [db]);
-   
+   AppMobiCloud.SecureData.prototype.setupPouch = function (successCB, errorCB,db) {
+        exec(successCB, errorCB, "AppMobiCloud", "getPassCode", [db]);
     }
 	
    /**
