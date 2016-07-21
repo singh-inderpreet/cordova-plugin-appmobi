@@ -30,4 +30,16 @@
 -(void) registerOAuth:(CDVInvokedUrlCommand*)command;
 -(void) getPassCode:(CDVInvokedUrlCommand*)command;
 -(void) GetCouchDBUser:(CDVInvokedUrlCommand*)command;
+-(void) encryptLocalStorage:(CDVInvokedUrlCommand*)command;
+-(void) encryptCustomPath:(CDVInvokedUrlCommand*)command;
+-(void) encryptDatabase:(CDVInvokedUrlCommand*)command;
+-(void) logCustomEvent:(CDVInvokedUrlCommand*)command;
+-(void) decryptDRM:(CDVInvokedUrlCommand*)command;
+-(void) refreshE2EEUsers:(CDVInvokedUrlCommand*)command;
+-(void) getE2EEUsers:(CDVInvokedUrlCommand*)command;
+-(void) sendEncryptedFile:(CDVInvokedUrlCommand*)command;
+-(void) sendEncryptedMessage:(CDVInvokedUrlCommand*)command;
+-(void) getAllMessages:(CDVInvokedUrlCommand*)command;
+-(void) getFileById:(CDVInvokedUrlCommand*)command;
+
 @end

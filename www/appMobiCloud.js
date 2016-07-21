@@ -372,6 +372,104 @@ if (typeof AppMobiCloud.notification == "undefined")
        }
        return oAuthList;
    };
+				
+				
+   /**
+    * This class provides Encrypt service on the device.
+    */
+   
+   AppMobiCloud.Encrypt = function() {
+   };
+   
+   if (typeof AppMobiCloud.encrypt == "undefined")
+        AppMobiCloud.encrypt = new AppMobiCloud.Encrypt();
+               
+   //Encrypt local storage file
+   AppMobiCloud.Encrypt.prototype.localStorage = function(successCB, errorCB, value){
+        exec(successCB, errorCB, "AppMobiCloud","encryptLocalStorage",[value]);
+   };
+
+   //Encrypt custom path
+   AppMobiCloud.Encrypt.prototype.customPath = function(successCB, errorCB, value, path){
+        exec(successCB, errorCB, "AppMobiCloud","encryptCustomPath",[value, path]);
+   };
+               
+   //Encrypt custom path
+   AppMobiCloud.Encrypt.prototype.encryptDatabase = function(successCB, errorCB, value){
+        exec(successCB, errorCB, "AppMobiCloud","encryptDatabase",[value]);
+   };
+               
+   //decrypt DRM
+   AppMobiCloud.Encrypt.prototype.decryptDRM = function(successCB, errorCB, value,goodKey){
+       exec(successCB, errorCB,"AppMobiCloud","decryptDRM",[value,goodKey]);
+   };
+               
+               
+   /**
+    * This class provides Analytics service on the device.
+    */
+   
+   AppMobiCloud.Analytics = function() {
+   };
+   
+   if (typeof AppMobiCloud.analytics == "undefined")
+       AppMobiCloud.analytics = new AppMobiCloud.Analytics();
+               
+   //Send custom event
+   AppMobiCloud.Analytics.prototype.logCustomEvent = function(event, value){
+       exec(null, null, "AppMobiCloud","logCustomEvent",[event, value]);
+   };
+               
+   //Send Page event
+   AppMobiCloud.Analytics.prototype.logPageEvent = function(value){
+       exec(null, null, "AppMobiCloud","logPageEvent",[value]);
+   };
+   
+   //Send Method event
+   AppMobiCloud.Analytics.prototype.logMethodEvent = function(value){
+       exec(null, null, "AppMobiCloud","logMethodEvent",[value]);
+   };
+               
+               
+    /**
+    * This class provides E2EE service on the device.
+    */
+
+    AppMobiCloud.E2EE = function() {
+    };
+
+    if (typeof AppMobiCloud.e2ee == "undefined")
+        AppMobiCloud.e2ee = new AppMobiCloud.E2EE();
+               
+    //Get Users
+    AppMobiCloud.E2EE.prototype.getRegisteredUsers = function(successCB, errorCB){
+        exec(successCB, errorCB, "AppMobiCloud","getE2EEUsers",[]);
+    };
+               
+    //Refresh User list
+    AppMobiCloud.E2EE.prototype.refreshRegisteredUsers = function(successCB, errorCB){
+        exec(successCB, errorCB, "AppMobiCloud","refreshE2EEUsers",[]);
+    };
+               
+    //Send Encrypted File
+    AppMobiCloud.E2EE.prototype.sendEncryptedFile = function(successCB, errorCB, deviceID, path){
+       exec(successCB, errorCB, "AppMobiCloud","sendEncryptedFile",[deviceID, path]);
+    };
+   
+    //Get All Messages
+    AppMobiCloud.E2EE.prototype.getAllMessages = function(successCB, errorCB){
+       exec(successCB, errorCB, "AppMobiCloud","getAllMessages",[]);
+    };
+   
+    //Send Encrypted Message
+    AppMobiCloud.E2EE.prototype.sendEncryptedMessage = function(successCB, errorCB, message, deviceID){
+       exec(successCB, errorCB, "AppMobiCloud","sendEncryptedMessage",[message, deviceID]);
+    };
+   
+    //Receive File
+    AppMobiCloud.E2EE.prototype.getFileById = function(successCB, errorCB, fileId){
+       exec(successCB, errorCB, "AppMobiCloud","getFileById",[fileId]);
+    };
 }
 catch(e) {
     alert("error in appmobicloud.js : "+e.message);

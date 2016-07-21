@@ -20,7 +20,7 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     id="cordova-plugin-appmobi"
-    version="1.0.8">
+    version="1.0.9">
     <name>Appmobi Secure Mobile Platform</name>
     <description>Quickly and easily build the most secure apps on the market today, in minutes with the Appmobi Secure Mobile Platform.  This platform provides your development team with configurable, high-performance security options for every app built, including app and device level shared keys for encryption and identity verification as well as integration with most 3rd party authentication systems such as OAUTH, LDAP, and more.  An Appmobi account is necessary and you can sign up for our FREE public cloud demo at https://cloud.appmobi.com/</description>
     <license>Apache 2.0</license>
@@ -44,7 +44,8 @@
     <preference name="CONFIG_URL" />
 
     <dependency id="cordova-plugin-inappbrowser@1.1.1" />
-
+    <dependency id="cordova-plugin-file" />
+    
     <!-- ios -->
     <platform name="ios">
 
@@ -77,7 +78,8 @@
         <source-file src="src/ios/libAppMobi.a" framework="true" />
         <framework src="libz.dylib"/>
         <framework src="libstdc++.6.dylib" />
-
+        <framework src="SystemConfiguration.framework" />
+        
     </platform>
 
     <!-- android -->
