@@ -54,6 +54,7 @@
                 <param name="ios-package" onload="true" value="AppMobiCloud" />
             </feature>
             <preference name="CordovaWebViewEngine" value="AppMobiWebView" />
+            <preference name="iosPersistentFileLocation" value="Library" />
             <preference name="privateStack" value="true" />
         </config-file>
         
