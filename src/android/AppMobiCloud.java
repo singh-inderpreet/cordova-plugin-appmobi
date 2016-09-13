@@ -3,6 +3,7 @@ package com.appMobiCloud;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
@@ -28,6 +29,7 @@ public class AppMobiCloud extends CordovaPlugin {
     boolean shouldExecuteOnResume;
     String userName;
     String password;
+    String passPhrase;
     public static boolean isActive() {
         return webView != null;
     }
@@ -84,6 +86,43 @@ public class AppMobiCloud extends CordovaPlugin {
 
 
         }
+
+
+        if(action.equalsIgnoreCase("initializeWithPassPhrase")){
+            passPhrase = args.getString(0);
+            callback = callbackContext;
+            if(passPhrase.trim().length()!=0&&passPhrase.length()>=4) {
+                cordova.getThreadPool().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        AppMobiCloudController.sharedController.initializeWithPassPhrase(callback,
+                                passPhrase);
+                    }
+                });
+            }else{
+                final HashMap<String, Object> properties = new HashMap<String, Object>();
+                properties.put("success", false);
+                properties.put("oauth", false);
+                properties.put("isPassPhraseEnabled", true);
+                properties.put("message", "user input required");
+                cordova.getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        AppMobiEvent event = new AppMobiEvent(
+                                "appMobi.user.input", properties);
+                        AppMobiCloudController.sharedController
+                                .fireJSEvent(event);
+                        return;
+
+                    }
+                });
+                callback.error("Passphrase must not be empty or less than 4 characters.");
+
+            }
+
+
+        }
+
 
         if (action.equalsIgnoreCase("getPassCode")) {
             callback = callbackContext;
@@ -239,7 +278,6 @@ public class AppMobiCloud extends CordovaPlugin {
         if (action.equalsIgnoreCase("setPushUserAttributes")) {
 
             final String attributes = args.getString(0);
-            Log.v("[appMobi]", attributes);
             cordova.getThreadPool().execute(new Runnable() {
                 @Override
                 public void run() {
@@ -646,5 +684,4 @@ public class AppMobiCloud extends CordovaPlugin {
     protected void getPermission(int requestCode, String permission) {
         PermissionHelper.requestPermission(this, requestCode, permission);
     }
-
 }
