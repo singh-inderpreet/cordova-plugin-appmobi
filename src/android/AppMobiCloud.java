@@ -3,7 +3,6 @@ package com.appMobiCloud;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
@@ -43,7 +42,6 @@ public class AppMobiCloud extends CordovaPlugin {
         super.initialize(cordova, webView);
         cordova = _cordova;
         webView = _webView;
-
     }
 
     @Override
@@ -601,6 +599,17 @@ public class AppMobiCloud extends CordovaPlugin {
 
         }
 
+      if (action.equalsIgnoreCase("checkProtectionStatus")) {
+        cordova.getThreadPool().execute(new Runnable() {
+          @Override
+          public void run() {
+            if (AppMobiCloudController.sharedController != null)
+              AppMobiCloudController.sharedController.checkProtectionStatus();
+
+          }
+        });
+
+      }
 
         return true;
     }
@@ -627,6 +636,9 @@ public class AppMobiCloud extends CordovaPlugin {
     @Override
     public void onDestroy() {
         // TODO Auto-generated method stub
+      /*  if(AppMobiCloudPushListener.sharedListener!=null){
+        AppMobiCloudPushListener.sharedListener.onDestroy();
+       }*/
         super.onDestroy();
         webView = null;
     }
@@ -640,6 +652,7 @@ public class AppMobiCloud extends CordovaPlugin {
             AppMobiCloudController.sharedController.enterBackground();
 
     }
+
 
     public void onRequestPermissionResult(int requestCode,
                                           String[] permissions, int[] grantResults) throws JSONException {
@@ -683,5 +696,23 @@ public class AppMobiCloud extends CordovaPlugin {
 
     protected void getPermission(int requestCode, String permission) {
         PermissionHelper.requestPermission(this, requestCode, permission);
+    }
+
+
+    @Override
+    public Boolean shouldAllowRequest(final String url) {
+        Log.v("message","shouldAllowRequest-"+url);
+        return super.shouldAllowRequest(url);
+    }
+
+    @Override
+    public Boolean shouldAllowNavigation(final String url) {
+        Log.v("message","shouldAllowNavigation-"+url);
+        return super.shouldAllowNavigation(url);
+    }
+
+    @Override
+    public Boolean shouldOpenExternalUrl(String url) {
+        return super.shouldOpenExternalUrl(url);
     }
 }

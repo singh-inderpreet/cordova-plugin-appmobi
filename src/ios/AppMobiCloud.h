@@ -44,5 +44,6 @@
 -(void) getAllMessages:(CDVInvokedUrlCommand*)command;
 -(void) getFileById:(CDVInvokedUrlCommand*)command;
 -(void) initializeWithPassPhrase:(CDVInvokedUrlCommand*)command;
+-(void) checkProtectionStatus:(CDVInvokedUrlCommand*)command;
 
 @end

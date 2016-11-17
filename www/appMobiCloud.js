@@ -1,4 +1,3 @@
-
 var exec = require('cordova/exec');
 AppMobiCloud = {
     _constructors: [],
@@ -27,10 +26,15 @@ AppMobiCloud.Advertising = function() {
 AppMobiCloud.Plugin.prototype.initialize = function (successCB, errorCB,userName,passWord) {
     exec(successCB, errorCB, "AppMobiCloud", "initialize", [userName, passWord]);
 }
-
+               
 AppMobiCloud.Plugin.prototype.initializeWithPassPhrase = function (successCB, errorCB,passPhrase) {
     exec(successCB, errorCB, "AppMobiCloud", "initializeWithPassPhrase", [passPhrase]);
 }
+
+AppMobiCloud.Plugin.prototype.checkProtectionStatus = function () {
+    exec(null, null, "AppMobiCloud", "checkProtectionStatus",[]);
+}
+
 
 if (typeof AppMobiCloud.plugin == "undefined")
     AppMobiCloud.plugin = new AppMobiCloud.Plugin();
