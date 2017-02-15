@@ -1,0 +1,22 @@
+{
+	"project_info": {
+		"project_number": "106482122937",
+		"firebase_url": "https://api-project-106482122937.firebaseio.com",
+		"project_id": "api-project-106482122937",
+		"storage_bucket": "api-project-106482122937.appspot.com"
+	},
+	"client": [{
+		"client_info": {
+			"mobilesdk_app_id": "1:106482122937:android:e0da51b56681e4a4",
+			"android_client_info": {
+				"package_name": PACKAGE
+			}
+		},
+		"api_key": [{
+			"current_key": "AIzaSyBd702ctsh5-TlIaG6K9fuzeFlTbTKgC7Q"
+			}
+		]
+
+	}],
+	"configuration_version": "1"
+}

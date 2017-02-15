@@ -20,7 +20,7 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     id="cordova-plugin-appmobi"
-    version="1.1.2">
+    version=“1.1.3”>
     <name>Appmobi Secure Mobile Platform</name>
     <description>Quickly and easily build the most secure apps on the market today, in minutes with the Appmobi Secure Mobile Platform.  This platform provides your development team with configurable, high-performance security options for every app built, including app and device level shared keys for encryption and identity verification as well as integration with most 3rd party authentication systems such as OAUTH, LDAP, and more.  An Appmobi account is necessary and you can sign up for our FREE public cloud demo at https://cloud.appmobi.com/</description>
     <license>Apache 2.0</license>
@@ -85,6 +85,8 @@
 
     <!-- android -->
     <platform name="android">
+		 <hook type="before_prepare" src="hooks/copy_fcm.js" />
+
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="AppMobiCloud" >
                 <param name="android-package" value="com.appMobiCloud.AppMobiCloud" />
@@ -102,10 +104,7 @@
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
             <uses-permission android:name="android.permission.GET_ACCOUNTS" />
             <uses-permission android:name="android.permission.WAKE_LOCK" />
-            <uses-permission android:name="android.permission.VIBRATE"/>
-            <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-            <permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" android:protectionLevel="signature" />
-            <uses-permission android:name="$PACKAGE_NAME.permission.C2D_MESSAGE" />
+            <uses-permission android:name="android.permission.VIBRATE"/>  
         </config-file>
         
         <config-file target="res/values/strings.xml" parent="/resources">
@@ -118,24 +117,43 @@
         
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <activity android:name="com.appMobiCloud.PushHandlerActivity" android:exported="true"/>
+			  <activity android:name="com.appMobiCloud.OnNotificationOpenReceiver" android:exported="true"/>
+			
+		<service android:name="com.appMobiCloud.FirebasePluginMessagingService">
+	    <intent-filter>
+		<action android:name="com.google.firebase.MESSAGING_EVENT"/>
+	    </intent-filter>
+		</service>
+	  
+		<service android:name="com.appMobiCloud.FirebasePluginInstanceIDService">
+	    <intent-filter>
+		<action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+		</intent-filter>
+		</service>
             
-            <receiver android:name="com.appMobiCloud.CordovaGCMBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND" >
-                <intent-filter>
-                    <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                    <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                    <category android:name="$PACKAGE_NAME" />
-                </intent-filter>
-            </receiver>
-            <service android:name="com.appMobiCloud.AppMobiCloudPushListener" />
+       
         </config-file>
-        
+       
+
+	   
         <source-file src="src/android/libs/libAppMobi.jar" target-dir="libs/" />
         
         <source-file src="src/android/AppMobiCloud.java" target-dir="src/com/appMobiCloud" />
         
         
         <source-file src="src/android/PushHandlerActivity.java" target-dir="src/com/appMobiCloud" />
-        
+		<source-file src="src/android/google-services.json" target-dir="." />
+		
+		<source-file src="src/android/OnNotificationOpenReceiver.java" target-dir="src/com/appMobiCloud" />
+		
+		<source-file src="src/android/FirebasePluginInstanceIDService.java" target-dir="src/com/appMobiCloud" />
+		<source-file src="src/android/FirebasePluginMessagingService.java" target-dir="src/com/appMobiCloud" />
+
+        <framework src="src/android/FCMPlugin.gradle" custom="true" type="gradleReference" />
+	
+		
+		
+		
         
     </platform>
 

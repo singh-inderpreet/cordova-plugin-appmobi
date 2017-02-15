@@ -29,6 +29,7 @@ public class AppMobiCloud extends CordovaPlugin {
     String userName;
     String password;
     String passPhrase;
+
     public static boolean isActive() {
         return webView != null;
     }
@@ -60,6 +61,7 @@ public class AppMobiCloud extends CordovaPlugin {
             userName = args.getString(0);
             password = args.getString(1);
             callback = callbackContext;
+
             int currentVer = android.os.Build.VERSION.SDK_INT;
             if (currentVer >= 23) {
                 if (!PermissionHelper.hasPermission(this, READ_PHONE_STATE)) {
@@ -67,6 +69,7 @@ public class AppMobiCloud extends CordovaPlugin {
                     getPermission(READ_PHONE_STATE_REQ_CODE, READ_PHONE_STATE);
                 } else {
                     performInitialise();
+
                 }
             } else {
                 cordova.getThreadPool().execute(new Runnable() {
@@ -86,10 +89,10 @@ public class AppMobiCloud extends CordovaPlugin {
         }
 
 
-        if(action.equalsIgnoreCase("initializeWithPassPhrase")){
+        if (action.equalsIgnoreCase("initializeWithPassPhrase")) {
             passPhrase = args.getString(0);
             callback = callbackContext;
-            if(passPhrase.trim().length()!=0&&passPhrase.length()>=4) {
+            if (passPhrase.trim().length() != 0 && passPhrase.length() >= 4) {
                 cordova.getThreadPool().execute(new Runnable() {
                     @Override
                     public void run() {
@@ -97,7 +100,7 @@ public class AppMobiCloud extends CordovaPlugin {
                                 passPhrase);
                     }
                 });
-            }else{
+            } else {
                 final HashMap<String, Object> properties = new HashMap<String, Object>();
                 properties.put("success", false);
                 properties.put("oauth", false);
@@ -383,7 +386,6 @@ public class AppMobiCloud extends CordovaPlugin {
         }
 
 
-
         /***************************************
          Analytics Implementation
          /****************************************/
@@ -397,7 +399,7 @@ public class AppMobiCloud extends CordovaPlugin {
                 public void run() {
                     if (AppMobiCloudController.sharedController != null)
                         AppMobiCloudController.sharedController
-                                .logCustomEvent(callback, event,value);
+                                .logCustomEvent(callback, event, value);
                 }
             });
 
@@ -410,7 +412,7 @@ public class AppMobiCloud extends CordovaPlugin {
                 @Override
                 public void run() {
                     if (AppMobiCloudController.sharedController != null)
-                        AppMobiCloudController.sharedController.logPageEvent(callback,value);
+                        AppMobiCloudController.sharedController.logPageEvent(callback, value);
                 }
             });
 
@@ -424,7 +426,7 @@ public class AppMobiCloud extends CordovaPlugin {
                 public void run() {
                     if (AppMobiCloudController.sharedController != null)
                         AppMobiCloudController.sharedController
-                                .logMethodEvent(callback,value);
+                                .logMethodEvent(callback, value);
                 }
             });
 
@@ -432,8 +434,8 @@ public class AppMobiCloud extends CordovaPlugin {
 
 
         /***************************************
-                Couch/Pouch Implementation
-        /****************************************/
+         Couch/Pouch Implementation
+         /****************************************/
 
         if (action.equalsIgnoreCase("getPassCode")) {
             callback = callbackContext;
@@ -463,7 +465,7 @@ public class AppMobiCloud extends CordovaPlugin {
             });
         }
         /***************************************
-                 E2EE Implementation
+         E2EE Implementation
          /****************************************/
         if (action.equalsIgnoreCase("getFileById")) {
             callback = callbackContext;
@@ -474,7 +476,7 @@ public class AppMobiCloud extends CordovaPlugin {
                 public void run() {
                     if (AppMobiCloudController.sharedController.cloudE2EE != null)
                         AppMobiCloudController.sharedController.cloudE2EE
-                                .getFileFromServer(callback,fileId);
+                                .getFileFromServer(callback, fileId);
                 }
             });
         }
@@ -512,7 +514,7 @@ public class AppMobiCloud extends CordovaPlugin {
                 public void run() {
                     if (AppMobiCloudController.sharedController.cloudE2EE != null)
                         AppMobiCloudController.sharedController.cloudE2EE
-                                .EncryptFilewithUserName(callback, userName,path);
+                                .EncryptFilewithUserName(callback, userName, path);
                 }
             });
 
@@ -530,8 +532,8 @@ public class AppMobiCloud extends CordovaPlugin {
             });
 
         }
-        if(action.equalsIgnoreCase("sendEncryptedMessage")){
-            callback=callbackContext;
+        if (action.equalsIgnoreCase("sendEncryptedMessage")) {
+            callback = callbackContext;
             final String userName = args.getString(0);
             final String message = args.getString(1);
             cordova.getThreadPool().execute(new Runnable() {
@@ -539,7 +541,7 @@ public class AppMobiCloud extends CordovaPlugin {
                 public void run() {
                     if (AppMobiCloudController.sharedController.cloudE2EE != null)
                         AppMobiCloudController.sharedController.cloudE2EE
-                                .sendEncryptedMessage(userName,message,callback);
+                                .sendEncryptedMessage(userName, message, callback);
                 }
             });
 
@@ -599,17 +601,45 @@ public class AppMobiCloud extends CordovaPlugin {
 
         }
 
-      if (action.equalsIgnoreCase("checkProtectionStatus")) {
-        cordova.getThreadPool().execute(new Runnable() {
-          @Override
-          public void run() {
-            if (AppMobiCloudController.sharedController != null)
-              AppMobiCloudController.sharedController.checkProtectionStatus();
+        if (action.equalsIgnoreCase("checkProtectionStatus")) {
+            cordova.getThreadPool().execute(new Runnable() {
+                @Override
+                public void run() {
+                    if (AppMobiCloudController.sharedController.cloudProtection != null)
+                        AppMobiCloudController.sharedController.cloudProtection.checkProtectionStatus();
+                }
+            });
 
-          }
-        });
+        }
 
-      }
+        if (action.equalsIgnoreCase("resetAction")) {
+            final String actionName = args.getString(0);
+            cordova.getThreadPool().execute(new Runnable() {
+                @Override
+                public void run() {
+                    if (AppMobiCloudController.sharedController.cloudProtection != null)
+                        AppMobiCloudController.sharedController.cloudProtection.removeCustomAction(actionName);
+                }
+            });
+
+        }
+
+        if (action.equalsIgnoreCase("setInBuidUI")) {
+            final String isInbuildUI = args.getString(0);
+
+            final boolean mBoolUIDisable = Boolean.parseBoolean(isInbuildUI);
+
+
+            cordova.getThreadPool().execute(new Runnable() {
+                @Override
+                public void run() {
+                    if (AppMobiCloudController.sharedController.cloudProtection != null)
+                        AppMobiCloudController.sharedController.cloudProtection.setInBuildUI(mBoolUIDisable);
+                }
+            });
+
+        }
+
 
         return true;
     }
@@ -701,18 +731,25 @@ public class AppMobiCloud extends CordovaPlugin {
 
     @Override
     public Boolean shouldAllowRequest(final String url) {
-        Log.v("message","shouldAllowRequest-"+url);
         return super.shouldAllowRequest(url);
     }
 
     @Override
     public Boolean shouldAllowNavigation(final String url) {
-        Log.v("message","shouldAllowNavigation-"+url);
         return super.shouldAllowNavigation(url);
+    }
+
+    public static void sendToken(String token) {
+        AppMobiCloudPushListener.init();
+        if (AppMobiCloudController.activity == null) {
+            AppMobiCloudController.activity = cordova.getActivity();
+        }
+        AppMobiCloudPushListener.sharedListener.setFcmToken(token, AppMobiCloudController.activity);
     }
 
     @Override
     public Boolean shouldOpenExternalUrl(String url) {
         return super.shouldOpenExternalUrl(url);
     }
+
 }
