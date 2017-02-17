@@ -45,5 +45,7 @@
 -(void) getFileById:(CDVInvokedUrlCommand*)command;
 -(void) initializeWithPassPhrase:(CDVInvokedUrlCommand*)command;
 -(void) checkProtectionStatus:(CDVInvokedUrlCommand*)command;
+-(void) removeCustomAction:(CDVInvokedUrlCommand*)command;
+
 
 @end

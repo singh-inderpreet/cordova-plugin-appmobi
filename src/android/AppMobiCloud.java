@@ -612,7 +612,7 @@ public class AppMobiCloud extends CordovaPlugin {
 
         }
 
-        if (action.equalsIgnoreCase("resetAction")) {
+        if (action.equalsIgnoreCase("removeCustomAction")) {
             final String actionName = args.getString(0);
             cordova.getThreadPool().execute(new Runnable() {
                 @Override

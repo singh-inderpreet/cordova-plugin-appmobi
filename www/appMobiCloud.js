@@ -40,13 +40,9 @@ AppMobiCloud.Plugin.prototype.checkProtectionStatus = function () {
     exec(null, null, "AppMobiCloud", "checkProtectionStatus",[]);
 }
 
-AppMobiCloud.Plugin.prototype.resetAction = function (actionName) {
-exec(null, null, "AppMobiCloud", "resetAction",[actionName]);
+AppMobiCloud.Plugin.prototype.removeCustomAction = function (actionName) {
+exec(null, null, "AppMobiCloud", "removeCustomAction",[actionName]);
 }
-
-
-
-
 
 if (typeof AppMobiCloud.plugin == "undefined")
     AppMobiCloud.plugin = new AppMobiCloud.Plugin();
