@@ -1,16 +1,16 @@
-#Appmobi Secure Mobile Platform
+# Appmobi Secure Mobile Platform
 ---------------------
 The Appmobi Secure Mobile Platform provides a level of security never seen in a mobile platform, enabling the development of highly secure Cordova-based applications in minutes versus months. This platform provides your development team with configurable, high-performance security options for every app built, including app and device level shared keys for encryption and identity verification as well as integration with most 3rd party authentication systems such as OAUTH, LDAP, and more.
 
 Quickly and easily build the most secure apps on the market today, in minutes.
 
-##Requirements
+## Requirements
 --------
 In order to utilize the Appmobi platform, you must have a registered Appmobi platform.  [Register for FREE](https://cloud.appmobi.com/) for our public cloud to get up and running fast.  We also offer a PrivateStack install where you can isolate the Appmobi backend on your own Amazon Web Service account; [Register for a PrivateStack Demo](https://licensing.appmobi.com/demo/signup/).  Additional AWS charges may apply depending on the configuration of your PrivateStack platform.
 
-##Features
+## Features
 --------
-###Security Kit
+### Security Kit
 
 Appmobi provides Mobile Application Data Encryption and User Authentication out of the box – securing enterprise mobile applications with 3 levels of security
 
@@ -19,11 +19,11 @@ Appmobi provides Mobile Application Data Encryption and User Authentication out 
  - Best: App + Device Level + Authentication
   This best level of security provides two types of authentication :
 
-###LDAP
+### LDAP
 
 For Using LDAP Authentication, A developer must configure his LDAP server for his app in Appmobi Management Portal. That in turn allows user to provide server credentails for login in to the App. 
  
-####initializePlugin using LDAP
+#### initializePlugin using LDAP
 
 Initialize the AppMobi Cordova plugin onDeviceReady() event is executed.
 
@@ -54,16 +54,16 @@ initializePlugin: function () {
         }, ldapUserName,ldapPassWord);  document.addEventListener('deviceready', onDeviceReady, false);
 ```
 
-###OAuth
+### OAuth
 
 A developer can use OAuth for App Login. In order to configure OAuth Providers, Developer must configure OAuth for his app in Appmobi Management Portal. So once Providers are configured, OAuth Login buttons are rendered on User Interface.
 
-###Secure PushMobi
+### Secure PushMobi
 ----------------------
 
 Secure PushMobi is a cross platform push messaging service for mobile applications. With a single code base you can send and receive push messages on iOS, Android, Windows8 and Windows8 Phone. Along with the 140 characters of message text, you also have the ability to send a data payload that can be accessed by your app and used to control a behavior or provide additional content.
 
-###Secure Live Update
+### Secure Live Update
 ----------------------
 
 Secure LiveUpdate allows you to update your app without submitting your changes to the various app stores. liveUpdate does not require that any additional code be added to your app. However, you do have the option to add liveUpdate code to give you more control regarding how and when updates are applied. When you are ready to apply a liveUpdate, you have several options on how your application handles the update.
@@ -84,7 +84,7 @@ On app start or resume, the container will be notified of the update. The new bu
 - **Option 4:** Notify the Application
 The final option puts control of the update completely in the hands of the developer and allows them to code their application to handle the update by themselves. Once an update is available, the application will be notified either at startup through the AppMobiCloud.updateAvailable parameter or during runtime through the [updateAvailable](https://docs.appmobi.com/liveupdate/javascriptapi/updateavailable.html#luupdateavailable) event. The liveUpdate message is included as the updateMessage property in this event. Once an update has been detected, developers may choose to kick off the update or not depending on how they would like their application to behave. See the [liveUpdate Sample Application](https://docs.appmobi.com/_downloads/ImplementationGuide-LiveUpdate-1-2.zip)  for more information.
 
-####EXAMPLE
+#### EXAMPLE
 
 ```
 /* OVER THE AIR UPDATE CODE */
@@ -101,13 +101,13 @@ function onUpdateAvailable(evt) {
 **NOTE :**  At the first time of liveUpdate you need to upload all files in bundle and for the next time you can do partial liveUpdate with files that has been changed.
 
 
-##Secure Data Store
+## Secure Data Store
 ---------------------
 SecureDataStore allows you to save your Application Data securely on device and Sync the same to the appmobiServer and also allows to share data to Application server.
 
-###Secure Data Store Methods
+### Secure Data Store Methods
 
-####saveData
+#### saveData
 
  saveData method is used to store data securely on the device and/or server. To use this functionality, user needs to enable app data security in your application security settings on the enterprise management portal.
 
@@ -176,7 +176,7 @@ function saveSecureData() {
         }
 ```
      
-###syncData
+### syncData
 
  syncData method is used to transfer all the local data from device which is not sync to server. Once data is synced with server, incremental local data will be deleted from device. To use this functionality, user needs to enable app data security in your application security settings on the enterprise management portal.
 
@@ -196,7 +196,7 @@ function onSecureDataSave(data){
 document.addEventListener("appMobi.securedata.sync", onSecureDataSync, false);
 ```
 
-###readData
+### readData
 
  readData method is used to read stored data from device. To use this functionality, user needs to enable app data security in your application security settings on the enterprise management portal.
 
@@ -249,34 +249,34 @@ var myKey = “BP”;
 
 ```
 
-##Secure Analytics
+## Secure Analytics
 --------------------
 
 Secure analytics delivers real-time intelligence from a fully scalable, secure, and is tested for optimal enterprise us, helping developers know what they’re protecting while they’re protecting it.
 
-##Development Guide
+## Development Guide
 ---------------------
 
 New to mobile development and looking for a place to start? Our Quickstart guide for Development will guide you step-by-step from setting up your development environment, managing services and installing all the necessary components of the Cordova development environment.
 
-###QuickStart Guide for Android Development
+### QuickStart Guide for Android Development
  - [Enabling Google Services](https://docs.appmobi.com/guides/quickstart-android/index.html#enabling-google-services)
  - [Installing the Android SDK & Cordova](https://docs.appmobi.com/guides/quickstart-android/index.html#installing-the-android-sdk-cordova)
  - [Setup your Appmobi App](https://docs.appmobi.com/guides/quickstart-android/index.html#setup-your-privatestack-app)
  - [Creating an App in Android Studio](https://docs.appmobi.com/guides/quickstart-android/index.html#creating-an-app-in-android-studio)
 
-###Quickstart Guide for iOS Development
+### Quickstart Guide for iOS Development
 -  [Creating a new App on your Appmobi Stack](https://docs.appmobi.com/guides/quickstart-ios/index.html#creating-a-new-app-on-private-stack) 
 -  [Creating a new iOS App on Cordova using CLI v5.0.0](https://docs.appmobi.com/guides/quickstart-ios/index.html#creating-a-new-ios-app-on-cordova-using-cli-v5-0-0) 
 -  [Creating a new iOS App on Apple Developer Site](https://docs.appmobi.com/guides/quickstart-ios/index.html#creating-a-new-ios-app-on-apple-developer-site) 
 -  [Generating Push SSL certificate](https://docs.appmobi.com/guides/quickstart-ios/index.html#generating-push-ssl-certificate) 
 -  [Generating Provisioning Profiles](https://docs.appmobi.com/guides/quickstart-ios/index.html#generating-provisioning-profiles) 
 
-###Quickstart Guide for OAuth Integration
+### Quickstart Guide for OAuth Integration
  - [Google OAuth Integration](https://docs.appmobi.com/guides/quickstart-oauth/index.html#google-oauth-integration) 
  - [Facebook OAuth Integration](https://docs.appmobi.com/guides/quickstart-oauth/index.html#facebook-oauth-integration)
 
-###Plugin Variables
+### Plugin Variables
 ----------
 Our plugin makes use of Cordova plugin variables to communicate with the Appmobi backend.  When installing the plugin you will need to provide 3 parameters:
 
@@ -285,10 +285,10 @@ Our plugin makes use of Cordova plugin variables to communicate with the Appmobi
 - **CONFIG_URL**: The HTTP endpoint of your Appmobi Backend (ie. https://cloud.appmobi.com/ for our public cloud, https://127.0.0.1 for an Appmobi PrivateStack )
 
 
-###Push Methods
+### Push Methods
 -------
 
-####getNotificationsList
+#### getNotificationsList
 
  Use this method to get a list of id keys to obtain access to the list of available notifications for this user.
 ```
@@ -323,7 +323,7 @@ var myNotifications = AppMobiCloud.notification.getNotificationsList();
          }
 ```
          
-####getNotificationData
+#### getNotificationData
 
  Use this method to get any data associated with a notification.
 ```
@@ -355,7 +355,7 @@ if(len > 0) {
    }
 ```
 
-####readPushNotifications
+#### readPushNotifications
 
  Use this method to update notifications status on the server as read by user.
 ```
@@ -405,10 +405,10 @@ This event is fired once the application has gotten a push notification.
  This event is fired once further demographic information is associated with a user.
 
 
-###User Methods
+### User Methods
 -----------
 
-####addPushUser
+#### addPushUser
 
  Use this method to register a new user on a particular appMobi application.
  
@@ -434,7 +434,7 @@ function addPushUser(){
          }
 ```
  
-####editPushUser
+#### editPushUser
 
  Use this method to change the email address and the password associated with the push notification of an appMobi application.
 
@@ -464,7 +464,7 @@ function editPushUser(){
           }
 ```
  
-####findPushUser
+#### findPushUser
 
  Use this method to allow users to find users of an appMobi application. It provides a kind of “friends” functionality.
 
@@ -509,17 +509,17 @@ function findPushUserByUsername(){
 
 
 
-##References
+## References
 ----------
  -  [Appmobi Official Website](https://www.appmobi.com/)
  -  [Appmobi Documentation](https://appmobi.freshdesk.com/support/home) 
  -  [Apache Cordova](https://cordova.apache.org/) 
 
-##Supported Platforms
+## Supported Platforms
 ----------
 - Android
 - iOS (For Intel XDK the plugin will not work for iOS as it has dependency on cordova-ios v4.0.0 which has not been released yet.)
 
-##Sample Application
+## Sample Application
 ----------
 Check out our [Appmobi Sample Cordova Application Template](https://github.com/appMobiGithub/sample-appmobi-privatestack) for a quickstart on getting to know the funtionality of the Appmobi platform.  We provide working examples of using many of the different features Appmobi provides which you can either use as a learning tool or a fresh application base.
