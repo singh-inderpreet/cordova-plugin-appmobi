@@ -512,7 +512,7 @@ function findPushUserByUsername(){
 ##References
 ----------
  -  [Appmobi Official Website](https://www.appmobi.com/)
- -  [Appmobi Documentation](https://docs.appmobi.com/) 
+ -  [Appmobi Documentation](https://appmobi.freshdesk.com/support/home) 
  -  [Apache Cordova](https://cordova.apache.org/) 
 
 ##Supported Platforms
