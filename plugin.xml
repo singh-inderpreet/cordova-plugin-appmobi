@@ -116,9 +116,15 @@
         </config-file>
         
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <activity android:name="com.appMobiCloud.PushHandlerActivity" android:exported="true"/>
-			  <activity android:name="com.appMobiCloud.OnNotificationOpenReceiver" android:exported="true"/>
-			
+        <activity android:name="com.appMobiCloud.PushHandlerActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="OPEN_ACTIVITY_1" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+         </activity>
+        
+        <activity android:name="com.appMobiCloud.OnNotificationOpenReceiver" android:exported="true"/>
+        
 		<service android:name="com.appMobiCloud.FirebasePluginMessagingService">
 	    <intent-filter>
 		<action android:name="com.google.firebase.MESSAGING_EVENT"/>
