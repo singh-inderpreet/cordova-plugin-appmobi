@@ -28,7 +28,7 @@ For Using LDAP Authentication, A developer must configure his LDAP server for hi
 
 Initialize the AppMobi Cordova plugin onDeviceReady() event is executed.
 
-```
+```javascript
 function onDeviceReady() {
                initializePlugin();
             }
@@ -83,7 +83,7 @@ If this choice was made when the liveUpdate was sent, a pop-up message from the 
 - **Option 3:** Prompt the User and request their permission
 On app start or resume, the container will be notified of the update. The new bundle will be silently downloaded in the background and will be installed on the following app start.
 - **Option 4:** Notify the Application
-The final option puts control of the update completely in the hands of the developer and allows them to code their application to handle the update by themselves. Once an update is available, the application will be notified either at startup through the AppMobiCloud.updateAvailable parameter or during runtime through the [updateAvailable](https://docs.appmobi.com/liveupdate/javascriptapi/updateavailable.html#luupdateavailable) event. The liveUpdate message is included as the updateMessage property in this event. Once an update has been detected, developers may choose to kick off the update or not depending on how they would like their application to behave. See the [liveUpdate Sample Application](https://docs.appmobi.com/_downloads/ImplementationGuide-LiveUpdate-1-2.zip)  for more information.
+The final option puts control of the update completely in the hands of the developer and allows them to code their application to handle the update by themselves. Once an update is available, the application will be notified either at startup through the AppMobiCloud.updateAvailable parameter or during runtime through the updateAvailable <!---(https://docs.appmobi.com/liveupdate/javascriptapi/updateavailable.html#luupdateavailable) ---> event. The liveUpdate message is included as the updateMessage property in this event. Once an update has been detected, developers may choose to kick off the update or not depending on how they would like their application to behave. <!--- See the [liveUpdate Sample Application](https://docs.appmobi.com/_downloads/ImplementationGuide-LiveUpdate-1-2.zip)  for more information. --->
 
 #### EXAMPLE
 
