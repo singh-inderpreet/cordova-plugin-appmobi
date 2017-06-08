@@ -6,7 +6,8 @@ Quickly and easily build the most secure apps on the market today, in minutes.
 
 ## Requirements
 --------
-In order to utilize the Appmobi platform, you must have a registered Appmobi platform.  [Register for FREE](https://cloud.appmobi.com/) for our public cloud to get up and running fast.  We also offer a PrivateStack install where you can isolate the Appmobi backend on your own Amazon Web Service account; [Register for a PrivateStack Demo](https://licensing.appmobi.com/demo/signup/).  Additional AWS charges may apply depending on the configuration of your PrivateStack platform.
+In order to utilize the Appmobi platform, you must have a registered Appmobi platform. Visit [Appmobi.com](https://appmobi.com) to contact us about registration. 
+<!--- [Register for FREE](https://cloud.appmobi.com/) for our public cloud to get up and running fast.  We also offer a PrivateStack install where you can isolate the Appmobi backend on your own Amazon Web Service account; [Register for a PrivateStack Demo](https://licensing.appmobi.com/demo/signup/).  Additional AWS charges may apply depending on the configuration of your PrivateStack platform. --->
 
 ## Features
 --------
@@ -86,7 +87,7 @@ The final option puts control of the update completely in the hands of the devel
 
 #### EXAMPLE
 
-```
+```javascript
 /* OVER THE AIR UPDATE CODE */
 // This event handler captures the event thrown when an update becomes available
 // while an application is running document.addEventListener("appMobi.device.update.available",onUpdateAvailable,false);
@@ -111,8 +112,8 @@ SecureDataStore allows you to save your Application Data securely on device and 
 
  saveData method is used to store data securely on the device and/or server. To use this functionality, user needs to enable app data security in your application security settings on the enterprise management portal.
 
-```
-AppMobiCloud.secureData.saveData(key, value,isMasterData, saveToServer, isJSON);
+```javascript
+AppMobiCloud.secureData.saveData(key, value, isMasterData, saveToServer, isJSON);
 ```
 
 **Parameters**	
@@ -126,7 +127,7 @@ AppMobiCloud.secureData.saveData(key, value,isMasterData, saveToServer, isJSON);
 
 **EXAMPLE**
 
-```
+```javascript
 function saveSecureData() {
             var key = prompt("Please enter Key", "BP");
             var dta = {};
@@ -180,12 +181,12 @@ function saveSecureData() {
 
  syncData method is used to transfer all the local data from device which is not sync to server. Once data is synced with server, incremental local data will be deleted from device. To use this functionality, user needs to enable app data security in your application security settings on the enterprise management portal.
 
-```
+```javascript
 AppMobiCloud.secureData.syncData();
 ```
 
 **EXAMPLE**
-```
+```javascript
 // Call  AppMobiCloud.secureData.syncData(); api to sync data to server.
 function syncSecureData(){
         AppMobiCloud.secureData.syncData();
@@ -200,8 +201,8 @@ document.addEventListener("appMobi.securedata.sync", onSecureDataSync, false);
 
  readData method is used to read stored data from device. To use this functionality, user needs to enable app data security in your application security settings on the enterprise management portal.
 
-```
-AppMobiCloud.secureData.readData(key,isMasterData);
+```javascript
+AppMobiCloud.secureData.readData(key, isMasterData);
 ```
 
 **Parameters**	
@@ -211,8 +212,8 @@ AppMobiCloud.secureData.readData(key,isMasterData);
 
 **EXAMPLE**
 
-```
-var myKey = “BP”;
+```javascript
+var myKey = "BP";
         var isMasterData = 0;
         readSecureData(myKey,isMasterData);
 
@@ -254,6 +255,7 @@ var myKey = “BP”;
 
 Secure analytics delivers real-time intelligence from a fully scalable, secure, and is tested for optimal enterprise us, helping developers know what they’re protecting while they’re protecting it.
 
+<!---
 ## Development Guide
 ---------------------
 
@@ -275,6 +277,7 @@ New to mobile development and looking for a place to start? Our Quickstart guide
 ### Quickstart Guide for OAuth Integration
  - [Google OAuth Integration](https://docs.appmobi.com/guides/quickstart-oauth/index.html#google-oauth-integration) 
  - [Facebook OAuth Integration](https://docs.appmobi.com/guides/quickstart-oauth/index.html#facebook-oauth-integration)
+--->
 
 ### Plugin Variables
 ----------
@@ -291,13 +294,13 @@ Our plugin makes use of Cordova plugin variables to communicate with the Appmobi
 #### getNotificationsList
 
  Use this method to get a list of id keys to obtain access to the list of available notifications for this user.
-```
+```javascript
 var notificationArray = AppMobiCloud.notification.getNotificationsList();
 ```
  
 **EXAMPLE**
 
-```
+```javascript
 var myNotifications = AppMobiCloud.notification.getNotificationsList();
          var len = myNotifications.length;
          if (len > 0) {
@@ -326,7 +329,7 @@ var myNotifications = AppMobiCloud.notification.getNotificationsList();
 #### getNotificationData
 
  Use this method to get any data associated with a notification.
-```
+```javascript
 var messageObject = AppMobiCloud.notification.getNotificationData(id);
 ```
  
@@ -336,7 +339,7 @@ var messageObject = AppMobiCloud.notification.getNotificationData(id);
 
 **EXAMPLE**
 
-```
+```javascript
 var  myNotifications= AppMobiCloud.notification.getNotificationList();
 var len=myNotifications.length;
 if(len > 0) {
@@ -358,7 +361,7 @@ if(len > 0) {
 #### readPushNotifications
 
  Use this method to update notifications status on the server as read by user.
-```
+```javascript
 AppMobiCloud.notification.readPushNotifications(notificationIDs);
 ```
  
@@ -367,7 +370,7 @@ AppMobiCloud.notification.readPushNotifications(notificationIDs);
 **notificationIDs :** A pipe (“|”) delimited list of notification ids to mark as read and remove from the system. The event object includes a “success” property that is set to true or false. This event will additionally include a “message” property describing the response from server.
 
 **EXAMPLE**
-```
+```javascript
 AppMobiCloud.notification.readPushNotifications = function(notificationIDs) {
  if( notificationIDs == undefined || notificationIDs == "")
  {
@@ -412,7 +415,7 @@ This event is fired once the application has gotten a push notification.
 
  Use this method to register a new user on a particular appMobi application.
  
-```
+```javascript
 AppMobiCloud.notification.addPushUser(userID,password,email);
 ```
 
@@ -424,7 +427,7 @@ AppMobiCloud.notification.addPushUser(userID,password,email);
 
 **EXAMPLE**
 
-```
+```javascript
 /* This code runs when user want to be registered */
 function addPushUser(){
              var user = prompt("Please enter username", "testUser");
@@ -438,7 +441,7 @@ function addPushUser(){
 
  Use this method to change the email address and the password associated with the push notification of an appMobi application.
 
-```
+```javascript
 AppMobiCloud.notification.editPushUser(newEmail,newPassword);
 ```
 
@@ -448,7 +451,7 @@ AppMobiCloud.notification.editPushUser(newEmail,newPassword);
  - **newPassword**  : The user’s chosen password for the push system. The password must not contain spaces or periods.
  
  **EXAMPLE**
- ```
+ ```javascript
 document.addEventListener("appMobi.notification.push.user.edit",pushMobi.onPushNotificationEvent,false);
  onPushNotificationEvent: function (data) {
           if (data.success == false) {
@@ -468,7 +471,7 @@ function editPushUser(){
 
  Use this method to allow users to find users of an appMobi application. It provides a kind of “friends” functionality.
 
-```
+```javascript
 AppMobiCloud.notification.findPushUser(userID,emailAddress);
 ```
 
@@ -478,7 +481,7 @@ AppMobiCloud.notification.findPushUser(userID,emailAddress);
  - **emailAddress**  : An email address to look for in the messaging database of the application.
  
  **EXAMPLE :** 
-```
+```javascript
 function findPushUserByUsername(){
         var user = prompt(“Please enter username”, “testUser”); AppMobiCloud.notification.findPushUserByUsername(user);
     }
@@ -512,13 +515,13 @@ function findPushUserByUsername(){
 ## References
 ----------
  -  [Appmobi Official Website](https://www.appmobi.com/)
- -  [Appmobi Documentation](https://appmobi.freshdesk.com/support/home) 
+<!---  -  [Appmobi Documentation](https://appmobi.freshdesk.com/support/home) --->
  -  [Apache Cordova](https://cordova.apache.org/) 
 
 ## Supported Platforms
 ----------
 - Android
-- iOS (For Intel XDK the plugin will not work for iOS as it has dependency on cordova-ios v4.0.0 which has not been released yet.)
+- iOS
 
 ## Sample Application
 ----------
