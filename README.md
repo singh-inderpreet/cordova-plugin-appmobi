@@ -83,7 +83,8 @@ If this choice was made when the liveUpdate was sent, a pop-up message from the 
 - **Option 3:** Prompt the User and request their permission
 On app start or resume, the container will be notified of the update. The new bundle will be silently downloaded in the background and will be installed on the following app start.
 - **Option 4:** Notify the Application
-The final option puts control of the update completely in the hands of the developer and allows them to code their application to handle the update by themselves. Once an update is available, the application will be notified either at startup through the AppMobiCloud.updateAvailable parameter or during runtime through the updateAvailable <!---(https://docs.appmobi.com/liveupdate/javascriptapi/updateavailable.html#luupdateavailable) ---> event. The liveUpdate message is included as the updateMessage property in this event. Once an update has been detected, developers may choose to kick off the update or not depending on how they would like their application to behave. <!--- See the [liveUpdate Sample Application](https://docs.appmobi.com/_downloads/ImplementationGuide-LiveUpdate-1-2.zip)  for more information. --->
+The final option puts control of the update completely in the hands of the developer and allows them to code their application to handle the update by themselves. Once an update is available, the application will be notified either at startup through the AppMobiCloud.updateAvailable parameter or during runtime through the updateAvailable  event. The liveUpdate message is included as the updateMessage property in this event. Once an update has been detected, developers may choose to kick off the update or not depending on how they would like their application to behave.
+<!--- See the [liveUpdate Sample Application](https://docs.appmobi.com/_downloads/ImplementationGuide-LiveUpdate-1-2.zip)  for more information. --->
 
 #### EXAMPLE
 
@@ -285,7 +286,7 @@ Our plugin makes use of Cordova plugin variables to communicate with the Appmobi
 
 - **APP_NAME**: The name of the application created on your Appmobi Management Portal.
 - **PROJECT_ID**: The unique application indentifier of your Appmobi application.
-- **CONFIG_URL**: The HTTP endpoint of your Appmobi Backend (ie. https://cloud.appmobi.com/ for our public cloud, https://127.0.0.1 for an Appmobi PrivateStack )
+- **CONFIG_URL**: The HTTP endpoint of your Appmobi Backend (ie. https://www.appmobi.com/ for our public cloud, https://127.0.0.1 for an Appmobi PrivateStack )
 
 
 ### Push Methods
@@ -423,7 +424,7 @@ AppMobiCloud.notification.addPushUser(userID,password,email);
 
  - **userID** : A unique string (per appMobi application) for this user to be addressable in the push system. The user id may not contain spaces or periods.
  - **password**  : The user’s chosen password for the push system. The password may not contain spaces or periods.
- -  **email**  : The email address that the [sendPushUserPass](https://docs.appmobi.com/pushmessaging/javascriptapi/sendpushuserpass.html#pmjsmsendpushuserpass) command will use to notify users about their userID and password information.
+ -  **email**  : The email address that the sendPushUserPass command will use to notify users about their userID and password information.
 
 **EXAMPLE**
 
